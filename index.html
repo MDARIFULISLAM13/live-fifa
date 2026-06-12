@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- 2nd Update: Premium SEO Optimization Title & Meta Tags -->
     <title>Watch FIFA Football Matches Live & Free | Ariful Sports</title>
     <meta name="description"
         content="Watch all FIFA football matches live streaming online for free on Ariful Sports. Enjoy high-quality, buffer-free football stream matching.">
@@ -13,7 +12,6 @@
         content="FIFA Football live, Watch Football Free, Live Football Stream, Ariful Sports Football, Free Football Streaming">
     <meta name="robots" content="index, follow">
 
-    <!-- Premium Google Fonts & FontAwesome Icons for Dashboard -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -282,6 +280,71 @@
             font-weight: 700;
         }
 
+        /* Share & Copy URL Action Box Style */
+        .share-box {
+            margin-top: 24px;
+            background: #111;
+            border: 1px dashed #e50914;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .share-box:hover {
+            background: #161616;
+            border-style: solid;
+            transform: translateY(-2px);
+        }
+
+        .share-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: #ccc;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .share-content i {
+            color: #e50914;
+            font-size: 18px;
+        }
+
+        .share-content span {
+            color: #fff;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* Custom Dynamic Popup Notification */
+        .toast-popup {
+            position: fixed;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e50914;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(229, 9, 20, 0.4);
+            z-index: 9999;
+            transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s;
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-popup.show {
+            bottom: 30px;
+            opacity: 1;
+        }
+
         /* Premium Developer Profile Widget Container */
         .developer-profile {
             margin-top: 24px;
@@ -393,6 +456,10 @@
             .dev-grid {
                 grid-template-columns: 1fr;
             }
+
+            .share-content {
+                font-size: 13px;
+            }
         }
     </style>
 </head>
@@ -405,10 +472,8 @@
 
     <div class="container">
 
-        <!-- Premium Stream Pipeline Engine Container -->
         <div class="player-wrapper" id="playerWrapper">
 
-            <!-- Watermark Panel Context -->
             <div class="player-watermark-bar">
                 <div class="watermark-logo">Ariful <span>Sports</span></div>
                 <div class="watermark-live">
@@ -416,10 +481,8 @@
                 </div>
             </div>
 
-            <!-- Video Display Platform Core -->
             <video id="video" autoplay muted playsinline></video>
 
-            <!-- Dynamic Action Deck Floating Overlays -->
             <div class="yt-controls">
                 <div class="left-controls">
                     <button class="control-btn" id="playBtn" title="Play/Pause (Space)">
@@ -451,12 +514,17 @@
 
         </div>
 
-        <!-- Target Broadcast Description Block Card -->
         <div class="info-card">
             <h2>Welcome to Ariful Sports. You can watch all <span>FIFA Football</span> matches here.</h2>
         </div>
 
-        <!-- Industry Standard Verified Developer Info Panel -->
+        <div class="share-box" id="shareBtn" title="Click to copy website link">
+        <div class="share-content">
+            <i class="fas fa-share-alt"></i>
+            Click here to copy the website address and share it with your friends! <span id="urlText">Copy Link</span>
+        </div>
+        </div>
+
         <div class="developer-profile">
             <div class="dev-title">System Architecture Developer Profile</div>
             <div class="dev-grid">
@@ -496,11 +564,14 @@
 
     </div>
 
+    <div class="toast-popup" id="toastPopup">
+        <i class="fas fa-check-circle"></i> Website address copied successfully!
+    </div>
+
     <footer>
         &copy; 2026 Ariful Sports. All Rights Reserved.
     </footer>
 
-    <!-- CDN Processing Control Library Engine -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <script>
@@ -519,6 +590,10 @@
         const fsIcon = document.getElementById('fsIcon');
         const pipBtn = document.getElementById('pipBtn');
         const playerWrapper = document.getElementById('playerWrapper');
+
+        // Share Box & Popup Variables
+        const shareBtn = document.getElementById('shareBtn');
+        const toastPopup = document.getElementById('toastPopup');
 
         // Boot Sequence Processing Frame
         if (Hls.isSupported()) {
@@ -590,7 +665,7 @@
             }
         }
 
-        // 1st Update: Mobile & Tablet Landscape Fullscreen Orientation Lock Feature
+        // Mobile & Tablet Landscape Fullscreen Orientation Lock Feature
         async function triggerFullscreen() {
             try {
                 if (!document.fullscreenElement) {
@@ -601,10 +676,9 @@
                     }
                     fsIcon.className = "fas fa-compress";
 
-                    // Mobile & Tablet Auto Rotate Screen to Landscape
                     if (screen.orientation && screen.orientation.lock) {
                         await screen.orientation.lock('landscape').catch((err) => {
-                            console.log("Orientation lock not supported or user gesture needed:", err);
+                            console.log("Orientation lock restriction skipped.", err);
                         });
                     }
                 } else {
@@ -614,7 +688,7 @@
                     fsIcon.className = "fas fa-expand";
                 }
             } catch (error) {
-                console.error("Fullscreen interaction failure:", error);
+                console.error("Fullscreen system block:", error);
             }
         }
 
@@ -623,12 +697,37 @@
         document.addEventListener('fullscreenchange', () => {
             if (!document.fullscreenElement) {
                 fsIcon.className = "fas fa-expand";
-                // Release orientation when exiting fullscreen
                 if (screen.orientation && screen.orientation.unlock) {
                     screen.orientation.unlock();
                 }
             }
         });
+
+        // Dynamic URL Copy Mechanics & Toast Controller Engine
+        shareBtn.onclick = function () {
+            const currentUrl = window.location.href;
+
+            // Modern Clipboard API Processing
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                showToastNotification();
+            }).catch(err => {
+                // Fallback Engine for Older Browsers
+                const shadowArea = document.createElement('textarea');
+                shadowArea.value = currentUrl;
+                document.body.appendChild(shadowArea);
+                shadowArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(shadowArea);
+                showToastNotification();
+            });
+        };
+
+        function showToastNotification() {
+            toastPopup.classList.add('show');
+            setTimeout(() => {
+                toastPopup.classList.remove('show');
+            }, 3000); // 3 Seconds Visibility Window
+        }
 
         // Picture In Picture Interface Nodes
         if (!document.pictureInPictureEnabled) { pipBtn.style.display = 'none'; }
