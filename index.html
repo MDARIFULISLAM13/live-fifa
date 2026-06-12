@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ariful Sports</title>
+    <!-- Premium Google Fonts & FontAwesome Icons for Dashboard -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #060606;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            user-select: none;
+            -webkit-user-select: none;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: #0d0d0d;
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .logo-main {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-main span {
+            color: #e50914;
+        }
+
+        .container {
+            width: min(1200px, 95%);
+            margin: auto;
+            padding: 30px 0;
+            flex-grow: 1;
+        }
+
+        /* YouTube Custom Player Container Grid Platform */
+        .player-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            border: 1px solid #161616;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* Swapped Watermark Branding Layer Matrix */
+        .player-watermark-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: row-reverse;
+            /* Flips the structural order */
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+            z-index: 15;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Watermark: Ariful Sports -> Right Side Position */
+        .watermark-logo {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .watermark-logo span {
+            color: #e50914;
+        }
+
+        /* Watermark: LIVE Badge -> Left Side Position */
+        .watermark-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e50914;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(229, 9, 20, 0.4);
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.3);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* YouTube Control Bar Layout Engine */
+        .yt-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        /* Hover Interaction Framework triggers overlay */
+        .player-wrapper:hover .yt-controls,
+        .player-wrapper:hover .player-watermark-bar {
+            opacity: 1;
+        }
+
+        .left-controls,
+        .right-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease, transform 0.1s ease;
+            padding: 4px;
+        }
+
+        .control-btn:hover {
+            color: #e50914;
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-slider {
+            width: 0px;
+            opacity: 0;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            outline: none;
+            transition: width 0.2s ease, opacity 0.2s ease;
+            cursor: pointer;
+        }
+
+        .volume-container:hover .volume-slider,
+        .volume-slider:focus {
+            width: 80px;
+            opacity: 1;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #aaa;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .live-indicator.is-live {
+            color: #e50914;
+        }
+
+        .live-indicator .live-dot {
+            width: 6px;
+            height: 6px;
+            background: #aaa;
+            border-radius: 50%;
+        }
+
+        .live-indicator.is-live .live-dot {
+            background: #e50914;
+        }
+
+        /* Content Info Block Cards */
+        .info-card {
+            margin-top: 24px;
+            background: #111;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #1a1a1a;
+            text-align: center;
+        }
+
+        .info-card h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+
+        .info-card h2 span {
+            color: #e50914;
+            font-weight: 700;
+        }
+
+        /* Premium Developer Profile Widget Container */
+        .developer-profile {
+            margin-top: 24px;
+            background: linear-gradient(135deg, #0e0e0e 0%, #121212 100%);
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .dev-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .dev-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .dev-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #0a0a0a;
+            padding: 14px 18px;
+            border-radius: 8px;
+            border: 1px solid #161616;
+            text-decoration: none;
+            color: #ccc;
+            transition: all 0.2s ease;
+        }
+
+        .dev-item:hover {
+            border-color: #252525;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .dev-item i {
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .dev-item .icon-user {
+            color: #e50914;
+        }
+
+        .dev-item .icon-fb {
+            color: #1877f2;
+        }
+
+        .dev-item .icon-phone {
+            color: #25d366;
+        }
+
+        .dev-item .icon-git {
+            color: #fff;
+        }
+
+        .dev-details p {
+            font-size: 11px;
+            color: #555;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .dev-details span {
+            font-size: 14px;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #0d0d0d;
+            color: #444;
+            font-size: 12px;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        /* Mobile Layout Configuration Rules */
+        @media(max-width: 768px) {
+            .logo-main {
+                font-size: 22px;
+            }
+
+            .yt-controls,
+            .player-watermark-bar {
+                opacity: 1;
+            }
+
+            .volume-slider {
+                width: 60px;
+                opacity: 1;
+            }
+
+            .watermark-logo {
+                font-size: 15px;
+            }
+
+            .dev-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-main">Ariful <span>Sports</span></div>
+    </header>
+
+    <div class="container">
+
+        <!-- Premium Stream Pipeline Engine Container -->
+        <div class="player-wrapper" id="playerWrapper">
+
+            <!-- Watermark Panel Context (LIVE on Left, Ariful Sports on Right) -->
+            <div class="player-watermark-bar">
+                <div class="watermark-logo">Ariful <span>Sports</span></div>
+                <div class="watermark-live">
+                    <span class="dot"></span>
+                    LIVE
+                </div>
+            </div>
+
+            <!-- Video Display Platform Core -->
+            <video id="video" autoplay muted playsinline></video>
+
+            <!-- Dynamic Action Deck Floating Overlays -->
+            <div class="yt-controls">
+
+                <div class="left-controls">
+                    <button class="control-btn" id="playBtn" title="Play/Pause (Space)">
+                        <i class="fas fa-pause" id="playIcon"></i>
+                    </button>
+
+                    <div class="volume-container">
+                        <button class="control-btn" id="muteBtn" title="Mute/Unmute">
+                            <i class="fas fa-volume-up" id="volumeIcon"></i>
+                        </button>
+                        <input type="range" id="volume" class="volume-slider" min="0" max="1" step="0.05" value="1">
+                    </div>
+
+                    <div class="live-indicator is-live" id="liveBtn" title="Sync to Live Head">
+                        <span class="live-dot"></span>
+                        <span>LIVE</span>
+                    </div>
+                </div>
+
+                <div class="right-controls">
+                    <button class="control-btn" id="pipBtn" title="Picture-in-Picture">
+                        <i class="fas fa-window-restore"></i>
+                    </button>
+                    <button class="control-btn" id="fullscreenBtn" title="Fullscreen (f)">
+                        <i class="fas fa-expand" id="fsIcon"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Target Broadcast Description Block Card -->
+        <div class="info-card">
+            <h2>Welcome to Ariful Sports. You can watch all <span>FIFA Football</span> matches here.</h2>
+        </div>
+
+        <!-- Industry Standard Verified Developer Info Panel -->
+        <div class="developer-profile">
+            <div class="dev-title">System Architecture Developer Profile</div>
+            <div class="dev-grid">
+
+                <div class="dev-item">
+                    <i class="fas fa-user-shield icon-user"></i>
+                    <div class="dev-details">
+                        <p>Developer</p>
+                        <span>MD Ariful Islam</span>
+                    </div>
+                </div>
+
+                <a href="https://www.facebook.com/arif341a/" target="_blank" class="dev-item">
+                    <i class="fab fa-facebook icon-fb"></i>
+                    <div class="dev-details">
+                        <p>Facebook</p>
+                        <span>arif341a</span>
+                    </div>
+                </a>
+
+                <div class="dev-item">
+                    <i class="fas fa-phone-alt icon-phone"></i>
+                    <div class="dev-details">
+                        <p>Mobile Contact</p>
+                        <span>01609347746</span>
+                    </div>
+                </div>
+
+                <a href="https://github.com/MDARIFULISLAM13" target="_blank" class="dev-item">
+                    <i class="fab fa-github icon-git"></i>
+                    <div class="dev-details">
+                        <p>GitHub Repository</p>
+                        <span>MDARIFULISLAM13</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 Ariful Sports. All Rights Reserved.
+    </footer>
+
+    <!-- CDN Processing Control Library Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <script>
+        // Obfuscated System Path Security Layer (Base64 Mapping Interceptor)
+        const _0x9e1a = "aHR0cHM6Ly9jaGFubmVsMDEtb25seW1leC5ha2FtYWl6ZWQubmV0L2hscy9saXZlLzIwMjI3NDkvZXZlbnQwMS9pbmRleC5tM3U4";
+        const streamUrl = atob(_0x9e1a);
+
+        const video = document.getElementById('video');
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const muteBtn = document.getElementById('muteBtn');
+        const volumeIcon = document.getElementById('volumeIcon');
+        const volumeSlider = document.getElementById('volume');
+        const liveBtn = document.getElementById('liveBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const fsIcon = document.getElementById('fsIcon');
+        const pipBtn = document.getElementById('pipBtn');
+        const playerWrapper = document.getElementById('playerWrapper');
+
+        // Boot Sequence Processing Frame
+        if (Hls.isSupported()) {
+            const hls = new Hls({
+                lowLatencyMode: true,
+                liveSyncDurationCount: 1,
+                maxBufferLength: 4
+            });
+            hls.loadSource(streamUrl);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play().catch(() => console.log("Init sequence finalized inside browser protocols."));
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = streamUrl;
+        }
+
+        // Direct Absolute Edge Tracking Logic
+        function syncToLiveHead() {
+            if (video.seekable && video.seekable.length > 0) {
+                video.currentTime = video.seekable.end(video.seekable.length - 1);
+            }
+        }
+
+        // Unified Execution Triggers
+        function togglePlay() {
+            if (video.paused) {
+                syncToLiveHead();
+                video.muted = false;
+                video.play();
+                playIcon.className = "fas fa-pause";
+                updateVolumeUI();
+            } else {
+                video.pause();
+                playIcon.className = "fas fa-play";
+            }
+        }
+
+        playBtn.onclick = togglePlay;
+        video.onclick = togglePlay;
+
+        liveBtn.onclick = () => {
+            syncToLiveHead();
+            if (video.paused) { video.play(); playIcon.className = "fas fa-pause"; }
+        };
+
+        // Acoustic Signal Amplifiers Controls
+        volumeSlider.addEventListener('input', (e) => {
+            video.volume = e.target.value;
+            video.muted = (video.volume === 0);
+            updateVolumeUI();
+        });
+
+        muteBtn.onclick = () => {
+            video.muted = !video.muted;
+            if (video.muted) {
+                volumeSlider.value = 0;
+            } else {
+                volumeSlider.value = video.volume > 0 ? video.volume : 1;
+                video.volume = volumeSlider.value;
+            }
+            updateVolumeUI();
+        };
+
+        function updateVolumeUI() {
+            if (video.muted || video.volume === 0) {
+                volumeIcon.className = "fas fa-volume-mute";
+            } else if (video.volume < 0.5) {
+                volumeIcon.className = "fas fa-volume-down";
+            } else {
+                volumeIcon.className = "fas fa-volume-up";
+            }
+        }
+
+        // Display Canvas Maximizer Infrastructure
+        fullscreenBtn.onclick = () => {
+            if (!document.fullscreenElement) {
+                if (playerWrapper.requestFullscreen) { playerWrapper.requestFullscreen(); }
+                else if (playerWrapper.webkitRequestFullscreen) { playerWrapper.webkitRequestFullscreen(); }
+                fsIcon.className = "fas fa-compress";
+            } else {
+                if (document.exitFullscreen) { document.exitFullscreen(); }
+                fsIcon.className = "fas fa-expand";
+            }
+        };
+
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) { fsIcon.className = "fas fa-expand"; }
+        });
+
+        // Picture In Picture Interface Nodes
+        if (!document.pictureInPictureEnabled) { pipBtn.style.display = 'none'; }
+        pipBtn.onclick = async () => {
+            try {
+                if (video !== document.pictureInPictureElement) { await video.requestPictureInPicture(); }
+                else { await document.exitPictureInPicture(); }
+            } catch (err) { console.error(err); }
+        };
+
+        video.addEventListener('play', () => {
+            playIcon.className = "fas fa-pause";
+            video.muted = false;
+            updateVolumeUI();
+        });
+
+        video.addEventListener('pause', () => {
+            playIcon.className = "fas fa-play";
+        });
+
+        // System Anti-Inspection Framework
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', function (e) {
+            if (e.key === "F12" ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+
+</body>
+
+</html>
