@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Premium SEO Optimization Title & Meta Tags -->
     <title>Watch FIFA Football Matches Live & Free | Ariful Sports</title>
     <meta name="description"
         content="Watch all FIFA football matches live streaming online for free on Ariful Sports. Enjoy high-quality, buffer-free football stream matching.">
@@ -12,6 +13,7 @@
         content="FIFA Football live, Watch Football Free, Live Football Stream, Ariful Sports Football, Free Football Streaming">
     <meta name="robots" content="index, follow">
 
+    <!-- Premium Google Fonts & FontAwesome Icons for Dashboard -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -77,6 +79,56 @@
             height: 100%;
             display: block;
             object-fit: contain;
+        }
+
+        /* Video Loader Spinner Overlay */
+        .video-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            z-index: 20;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-loader.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: #e50914;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #eee;
+            letter-spacing: 1px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Swapped Watermark Branding Layer Matrix */
@@ -256,6 +308,117 @@
 
         .live-indicator.is-live .live-dot {
             background: #e50914;
+        }
+
+        /* Premium Channels Grid Section */
+        .channels-section {
+            margin-top: 24px;
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .channels-title {
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .channels-title i {
+            color: #e50914;
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 12px;
+            max-height: 290px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Custom Scrollbar for Channels Grid */
+        .channels-grid::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .channels-grid::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        .channels-grid::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 4px;
+        }
+
+        .channels-grid::-webkit-scrollbar-thumb:hover {
+            background: #e50914;
+        }
+
+        .channel-card {
+            background: #121212;
+            border: 1px solid #1c1c1c;
+            border-radius: 10px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .channel-card:hover {
+            border-color: #e50914;
+            background: #161616;
+            transform: translateY(-2px);
+        }
+
+        .channel-card.active {
+            border-color: #e50914;
+            background: rgba(229, 9, 20, 0.08);
+            box-shadow: 0 0 12px rgba(229, 9, 20, 0.2);
+        }
+
+        .channel-logo-wrapper {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #252525;
+        }
+
+        .channel-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .channel-name {
+            font-size: 11px;
+            font-weight: 500;
+            color: #ccc;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .channel-card:hover .channel-name,
+        .channel-card.active .channel-name {
+            color: #fff;
         }
 
         /* Content Info Block Cards */
@@ -460,6 +623,10 @@
             .share-content {
                 font-size: 13px;
             }
+
+            .channels-grid {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            }
         }
     </style>
 </head>
@@ -472,17 +639,27 @@
 
     <div class="container">
 
+        <!-- Premium Stream Pipeline Engine Container -->
         <div class="player-wrapper" id="playerWrapper">
 
-            <div class="player-watermark-bar">
-                <div class="watermark-logo">Ariful <span>Sports</span></div>
-                <div class="watermark-live">
-                    <span class="dot"></span>LIVE
-                </div>
+            <!-- Video Loading Spinner Dynamic Engine -->
+            <div class="video-loader" id="videoLoader">
+                <div class="spinner"></div>
+                <div class="loader-text">Loading Stream...</div>
             </div>
 
+            <!-- Watermark Panel Context -->
+            <div class="player-watermark-bar">
+                <div class="watermark-logo">Ariful <span>Sports</span></div>
+                <!-- <div class="watermark-live">
+                    <span class="dot"></span>LIVE
+                </div> -->
+            </div>
+
+            <!-- Video Display Platform Core -->
             <video id="video" autoplay muted playsinline></video>
 
+            <!-- Dynamic Action Deck Floating Overlays -->
             <div class="yt-controls">
                 <div class="left-controls">
                     <button class="control-btn" id="playBtn" title="Play/Pause (Space)">
@@ -514,17 +691,31 @@
 
         </div>
 
+        <!-- NEW UPDATE: Dynamic All Channels List Grid Deck -->
+        <div class="channels-section">
+            <div class="channels-title">
+                <i class="fas fa-tv"></i> All Live Channels
+            </div>
+            <div class="channels-grid" id="channelsGrid">
+                <!-- Channels rendered dynamically via JavaScript architecture below -->
+            </div>
+        </div>
+
+        <!-- Target Broadcast Description Block Card -->
         <div class="info-card">
             <h2>Welcome to Ariful Sports. You can watch all <span>FIFA Football</span> matches here.</h2>
         </div>
 
+        <!-- Share and Copy Website Address Widget Box -->
         <div class="share-box" id="shareBtn" title="Click to copy website link">
-        <div class="share-content">
-            <i class="fas fa-share-alt"></i>
-            Click here to copy the website address and share it with your friends! <span id="urlText">Copy Link</span>
-        </div>
+            <div class="share-content">
+                <i class="fas fa-share-alt"></i>
+                Click here to copy the website address and share it with your friends! <span id="urlText">Copy
+                    Link</span>
+            </div>
         </div>
 
+        <!-- Industry Standard Verified Developer Info Panel -->
         <div class="developer-profile">
             <div class="dev-title">System Architecture Developer Profile</div>
             <div class="dev-grid">
@@ -564,6 +755,7 @@
 
     </div>
 
+    <!-- Live Toast Alert Popup Base -->
     <div class="toast-popup" id="toastPopup">
         <i class="fas fa-check-circle"></i> Website address copied successfully!
     </div>
@@ -572,12 +764,47 @@
         &copy; 2026 Ariful Sports. All Rights Reserved.
     </footer>
 
+    <!-- CDN Processing Control Library Engine -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <script>
-        // Obfuscated System Path Security Layer
-        const _0x9e1a = "aHR0cHM6Ly9jaGFubmVsMDEtb25seW1leC5ha2FtYWl6ZWQubmV0L2hscy9saXZlLzIwMjI3NDkvZXZlbnQwMS9pbmRleC5tM3U4";
-        const streamUrl = atob(_0x9e1a);
+        // System Master Data Storage Array Structure
+        const channelsData = [
+            { name: "Win Sports", logo: "https://stream.codecloud.bd/uploads/logos/logo_ed51b17683c8a08d.png", url: "https://1nyaler.streamhostingcdn.top/stream/32/index.m3u8" },
+            { name: "PTV Sports HD (World Cup)", logo: "https://stream.codecloud.bd/uploads/logos/logo_c87af38fabcdc1f5.jpg", url: "https://cdn10.zohanayaan.com:1686/hls/ptvpk.m3u8" },
+            { name: "T Sports HD", logo: "https://stream.codecloud.bd/uploads/logos/logo_a8d2b09f6056b453.png", url: "https://live4.asimxtech.online/tsports2/index.m3u8" },
+            { name: "T Sports HD Server 2", logo: "https://stream.codecloud.bd/uploads/logos/logo_d18f17e756ed24a7.png", url: "https://live1.asimxtech.online/tsports/index.m3u8" },
+            { name: "T Sports HD Server 3", logo: "https://stream.codecloud.bd/uploads/logos/logo_d18f17e756ed24a7.png", url: "https://live1.asimxtech.online/tsports/index.m3u8" },
+            { name: "T Sports HD Server 4", logo: "https://stream.codecloud.bd/uploads/logos/logo_d18f17e756ed24a7.png", url: "http://rgkkw.live/live/1Aoen7elp5/IgMJ60tmAa/130714.ts" },
+            { name: "Caze Tv Brasil", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2a39c4ac184.png", url: "https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/1080p-vtt/index.m3u8" },
+            { name: "Caze Tv Brasil 2", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2a3938aca1c.png", url: "https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/Caze_TV.m3u8" },
+            { name: "PTV Sports HD (FIFA)", logo: "https://imglink.cc/cdn/wHhztDDZrU.png", url: "https://live6.asimxtech.online/ptv/index.m3u8" },
+            { name: "Bein Sports XTRA", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2a39fb56eec.jpeg", url: "https://amg01334-amg01334c2-freelivesports-emea-6791.playouts.now.amagi.tv/playlist/amg01334-beinxtra-beinxtrausapp-freelivesportsemea/playlist.m3u8" },
+            { name: "beIN Sports Xtra (Server 2)", logo: "https://imglink.cc/cdn/kIiut6WBq0.jpg", url: "https://bein-esp-xumo.amagi.tv/playlistR720P.m3u8" },
+            { name: "Bein Sports 2", logo: "https://imglink.cc/cdn/kIiut6WBq0.jpg", url: "https://andro.226503.xyz/checklist/androstreamlivebs2.m3u8" },
+            { name: "Bein Sports 3", logo: "https://imglink.cc/cdn/kIiut6WBq0.jpg", url: "https://andro.226503.xyz/checklist/androstreamlivebs3.m3u8" },
+            { name: "Bein Sports 4", logo: "https://imglink.cc/cdn/kIiut6WBq0.jpg", url: "https://bein-esp-xumo.amagi.tv/playlistR1080p.m3u8" },
+            { name: "Bein Sports 4 Server 2", logo: "https://imglink.cc/cdn/kIiut6WBq0.jpg", url: "https://andro.226503.xyz/checklist/androstreamlivebs4.m3u8" },
+            { name: "Tyc Sports 🇦🇷 Argentina", logo: "https://imglink.cc/cdn/1oSRQnyUqK.jpg", url: "https://amg26268-amg26268c14-freelivesports-emea-10267.playouts.now.amagi.tv/ts-us-e2-n2/playlist/amg26268-sportsstudio-tycsports-freelivesportsemea/playlist.m3u8" },
+            { name: "Las Estrellas Mexico", logo: "https://stream.codecloud.bd/uploads/logos/logo_3731aaa97b88a0af.png", url: "https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8" },
+            { name: "TNT Sports Premium", logo: "https://stream.codecloud.bd/uploads/logos/logo_2322f46dbf02dd27.jpeg", url: "https://1nyaler.streamhostingcdn.top/stream/30/index.m3u8" },
+            { name: "FIFA Worldcup Bangla", logo: "https://stream.codecloud.bd/uploads/logos/logo_96087dbbd66a4f6e.png", url: "https://d1g8wgjurz8via.cloudfront.net/bpk-tv/Zeebanglacinema/default/manifest.mpd" },
+            { name: "FIFA+ Spain", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2a3add7c408.png", url: "https://d63fabad.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWVzX0ZJRkFQbHVzU3BhbmlzaF9ITFM/playlist.m3u8" },
+            { name: "ESPN 2", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2a3b50397da.jpg", url: "https://tv.topmediatv.net:25463/live/TopMediaWeb/bOteTR8ED1/108.m3u8" },
+            { name: "FIFA+ English", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2a3a4c03f4a.png", url: "https://a62dad94.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWV1X0ZJRkFQbHVzRW5nbGlzaF9ITFM/playlist.m3u8" },
+            { name: "FIFA+ Brazil", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2a3b125db37.png", url: "https://e3be9ac5.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfRklGQVBsdXNQb3J0dWd1ZXNlX0hMUw/playlist.m3u8" },
+            { name: "2 Tv Sports Server 2", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2bada099b77.png", url: "https://tv.cdn.xsg.ge/gpb-2tv/index.m3u8" },
+            { name: "2 Tv Sports", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2bad8342c69.png", url: "https://tv.cdn.xsg.ge/gpb-2tv/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Fox Sports 2", logo: "https://imglink.cc/cdn/o5BoWU_BEz.png", url: "https://tvsen7.aynaott.com/foxsports2/index.m3u8?e=1779283790&amp;amp;u=78be6644-0a65-48ec-81a4-089ac65a2619&amp;amp;token=cbb7f40b4af7be51a91e0629a5ac7238" },
+            { name: "FIFA Plus B 🏆", logo: "https://i.ibb.co.com/vnbkF0r/fifa-world-cup-2026-logo-png-seeklogo-665644.png", url: "https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8" },
+            { name: "FIFA Plus 🇫🇷 France", logo: "https://i.ibb.co.com/vnbkF0r/fifa-world-cup-2026-logo-png-seeklogo-665644.png", url: "https://37b4c228.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/playlist.m3u8" },
+            { name: "FIFA Plus 🇺🇸 USA", logo: "https://i.ibb.co.com/vnbkF0r/fifa-world-cup-2026-logo-png-seeklogo-665644.png", url: "https://d2w9q46ikgrcwx.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-of5cbk3sav3w5/v1/sysdata_s_p_a_fifa_7/samsungheadend_us/latest/main/hls/playlist.m3u8" },
+            { name: "FIFA Plus 🇦🇷 Argentina", logo: "https://i.ibb.co.com/vnbkF0r/fifa-world-cup-2026-logo-png-seeklogo-665644.png", url: "https://6c849fb3.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctbXhfRklGQVBsdXNTcGFuaXNoLTFfSExT/playlist.m3u8" },
+            { name: "FIFA Plus 🇩🇪 Germany", logo: "https://i.ibb.co.com/vnbkF0r/fifa-world-cup-2026-logo-png-seeklogo-665644.png", url: "https://4397879b.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWRlX0ZJRkFQbHVzR2VybWFuX0hMUw/playlist.m3u8" },
+            { name: "FIFA Plus 🇮🇪 Italy", logo: "https://i.ibb.co.com/vnbkF0r/fifa-world-cup-2026-logo-png-seeklogo-665644.png", url: "https://5d95f7d7.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWl0X0ZJRkFQbHVzSXRhbGlhbl9ITFM/playlist.m3u8" },
+            { name: "Bein Sports 1", logo: "https://imglink.cc/cdn/kIiut6WBq0.jpg", url: "https://andro.226503.xyz/checklist/androstreamlivebs1.m3u8" }
+
+        ];
 
         const video = document.getElementById('video');
         const playBtn = document.getElementById('playBtn');
@@ -590,26 +817,75 @@
         const fsIcon = document.getElementById('fsIcon');
         const pipBtn = document.getElementById('pipBtn');
         const playerWrapper = document.getElementById('playerWrapper');
+        const videoLoader = document.getElementById('videoLoader');
+        const channelsGrid = document.getElementById('channelsGrid');
 
-        // Share Box & Popup Variables
         const shareBtn = document.getElementById('shareBtn');
         const toastPopup = document.getElementById('toastPopup');
 
-        // Boot Sequence Processing Frame
-        if (Hls.isSupported()) {
-            const hls = new Hls({
-                lowLatencyMode: true,
-                liveSyncDurationCount: 1,
-                maxBufferLength: 4
-            });
-            hls.loadSource(streamUrl);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, function () {
-                video.play().catch(() => console.log("Init sequence finalized inside browser protocols."));
-            });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = streamUrl;
+        let currentHls = null;
+
+        // Ultra Low-Latency Stream Boot Pipeline Engine Configuration
+        function loadStream(url) {
+            // Activate Loader Component
+            videoLoader.classList.add('active');
+
+            if (currentHls) {
+                currentHls.destroy();
+            }
+
+            if (Hls.isSupported()) {
+                currentHls = new Hls({
+                    lowLatencyMode: true,
+                    liveSyncDurationCount: 1,
+                    maxBufferLength: 4,
+                    enableWorker: true
+                });
+                currentHls.loadSource(url);
+                currentHls.attachMedia(video);
+                currentHls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    video.play().catch(() => console.log("Auto-play interface context deferred."));
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+            }
         }
+
+        // Native Video State Event Listeners for Loader Toggling
+        video.addEventListener('waiting', () => videoLoader.classList.add('active'));
+        video.addEventListener('loadstart', () => videoLoader.classList.add('active'));
+        video.addEventListener('playing', () => videoLoader.classList.remove('active'));
+        video.addEventListener('canplay', () => videoLoader.classList.remove('active'));
+
+        // Injecting and Generating Channels Interface Layout Elements Dynamically
+        function initializeChannels() {
+            channelsData.forEach((channel, index) => {
+                const card = document.createElement('div');
+                card.className = `channel-card ${index === 0 ? 'active' : ''}`;
+                card.innerHTML = `
+                    <div class="channel-logo-wrapper">
+                        <img src="${channel.logo}" class="channel-logo" alt="${channel.name}" onerror="this.src='https://imglink.cc/cdn/kIiut6WBq0.jpg'">
+                    </div>
+                    <div class="channel-name" title="${channel.name}">${channel.name}</div>
+                `;
+
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.channel-card').forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    loadStream(channel.url);
+                });
+
+                channelsGrid.appendChild(card);
+            });
+
+            // Auto-load First Index Stream Channel as Core System Entry Default
+            if (channelsData.length > 0) {
+                loadStream(channelsData[0].url);
+            }
+        }
+
+        // Execute Core Initialization Runtime Hooks
+        initializeChannels();
 
         function syncToLiveHead() {
             if (video.seekable && video.seekable.length > 0) {
@@ -665,7 +941,6 @@
             }
         }
 
-        // Mobile & Tablet Landscape Fullscreen Orientation Lock Feature
         async function triggerFullscreen() {
             try {
                 if (!document.fullscreenElement) {
@@ -707,11 +982,9 @@
         shareBtn.onclick = function () {
             const currentUrl = window.location.href;
 
-            // Modern Clipboard API Processing
             navigator.clipboard.writeText(currentUrl).then(() => {
                 showToastNotification();
             }).catch(err => {
-                // Fallback Engine for Older Browsers
                 const shadowArea = document.createElement('textarea');
                 shadowArea.value = currentUrl;
                 document.body.appendChild(shadowArea);
@@ -726,10 +999,9 @@
             toastPopup.classList.add('show');
             setTimeout(() => {
                 toastPopup.classList.remove('show');
-            }, 3000); // 3 Seconds Visibility Window
+            }, 3000);
         }
 
-        // Picture In Picture Interface Nodes
         if (!document.pictureInPictureEnabled) { pipBtn.style.display = 'none'; }
         pipBtn.onclick = async () => {
             try {
