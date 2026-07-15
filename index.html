@@ -402,15 +402,19 @@
             object-fit: cover;
         }
 
-       .channel-name {
+        .channel-name {
             font-size: 11px;
             font-weight: 500;
             color: #ccc;
-            white-space: normal; /* boro name niche chole ashbe */
-            text-align: center; /* name center-e thakbe */
-            overflow: visible; /* full name dekhabe */
+            white-space: normal;
+            /* boro name niche chole ashbe */
+            text-align: center;
+            /* name center-e thakbe */
+            overflow: visible;
+            /* full name dekhabe */
             width: 100%;
         }
+
         .channel-card:hover .channel-name,
         .channel-card.active .channel-name {
             color: #fff;
@@ -762,11 +766,14 @@
     <script>
         // System Master Data Storage Array Structure with Base64 Encrypted Stream Links
         const encryptedChannels = [
+
+             
+            { name: "FIFA Live", logo: "https://i.ibb.co.com/vnbkF0r/fifa-world-cup-2026-logo-png-seeklogo-665644.png", encUrl: "aHR0cHM6Ly9saXZlMDUubWlla2dvLmFwcC9saXZlLzI0NTYxNzM1Lm0zdTg=" },
+
             { name: "Win Sports", logo: "https://stream.codecloud.bd/uploads/logos/logo_ed51b17683c8a08d.png", encUrl: "aHR0cHM6Ly8xbnlhbGVyLnN0cmVhbWhvc3RpbmdjZG4udG9wL3N0cmVhbS8zMi9pbmRleC5tM3U4" },
             { name: "Caze Tv", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2a39c4ac184.png", encUrl: "aHR0cHM6Ly9kZnI4MHF6NDM1Y3JjLmNsb3VkZnJvbnQubmV0L01OT1AvQW1hZ2kvQ2F6ZS9DYXplX1RWX0JSLzEwODBwLXZ0dC9pbmRleC5tM3U4" },
             { name: "Caze Tv 2", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2a3938aca1c.png", encUrl: "aHR0cHM6Ly9kZnI4MHF6NDM1Y3JjLmNsb3VkZnJvbnQubmV0L01OT1AvQW1hZ2kvQ2F6ZS9DYXplX1RWX0JSL0NhemVfVFYubTN1OA==" },
             { name: "T Sports HD", logo: "https://stream.codecloud.bd/uploads/logos/logo_a8d2b09f6056b453.png", encUrl: "aHR0cDovLzE5OC4xOTUuMjM5LjUwOjgwOTUvdHNwb3J0cy90cmFja3MtdjFhMS9tb25vLm0zdTg=" },
-
             { name: "Tyc Sports 🇦🇷 Argentina", logo: "https://imglink.cc/cdn/1oSRQnyUqK.jpg", encUrl: "aHR0cHM6Ly9hbWcyNjI2OC1hbWcyNjI2OGMxNC1mcmVlbGl2ZXNwb3J0cy1lbWVhLTEwMjY3LnBsYXlvdXRzLm5vdy5hbWFnaS50di90cy11cy1lMi1uMi9wbGF5bGlzdC9hbWcyNjI2OC1zcG9ydHNzdHVkaW8tdHljc3BvcnRzLWZyZWVsaXZlc3BvcnRzZW1lYS9wbGF5bGlzdC5tM3U4" },
             { name: "TNT Sports Premium", logo: "https://stream.codecloud.bd/uploads/logos/logo_2322f46dbf02dd27.jpeg", encUrl: "aHR0cHM6Ly8xbnlhbGVyLnN0cmVhbWhvc3RpbmdjZG4udG9wL3N0cmVhbS8zMC9pbmRleC5tM3U4" },
             { name: "Bein Sports XTRA", logo: "https://stream.codecloud.bd/uploads/logos/logo_6a2a39fb56eec.jpeg", encUrl: "aHR0cHM6Ly9hbWcwMTMzNC1hbWcwMTMzNGMyLWZyZWVsaXZlc3BvcnRzLWVtZWEtNjc5MS5wbGF5b3V0cy5ub3cuYW1hZ2kudHYvcGxheWxpc3QvYW1nMDEzMzQtYmVpbnh0cmEtYmVpbnh0cmF1c2FwcC1mcmVlbGl2ZXNwb3J0c2VtZWEvcGxheWxpc3QubTN1OA==" },
@@ -779,10 +786,9 @@
 
             { name: "Las Estrellas Mexico", logo: "https://stream.codecloud.bd/uploads/logos/logo_3731aaa97b88a0af.png", encUrl: "aHR0cHM6Ly9jaGFubmVsMDEtb25seW1leC5ha2FtYWl6ZWQubmV0L2hscy9saXZlLzIwMjI3NDkvZXZlbnQwMS9pbmRleC5tM3U4" },
 
-            { name: "T Sports HD 2", logo: "https://stream.codecloud.bd/uploads/logos/logo_a8d2b09f6056b453.png", encUrl: "aHR0cHM6Ly9saXZlNC5hc2lteHRlY2gub25saW5lL3RzcG9ydHMyL2luZGV4Lm0zdTg=" },
+            { name: "T Sports HD Server 2", logo: "https://stream.codecloud.bd/uploads/logos/logo_d18f17e756ed24a7.png", encUrl: "aHR0cHM6Ly9saXZlMS5hc2lteHRlY2gub25saW5lL3RzcG9ydC9pbmRleC5tM3U4" },
             { name: "T Sports HD Server 3", logo: "https://stream.codecloud.bd/uploads/logos/logo_d18f17e756ed24a7.png", encUrl: "aHR0cHM6Ly9saXZlMS5hc2lteHRlY2gub25saW5lL3RzcG9ydC9pbmRleC5tM3U4" },
-            { name: "T Sports HD Server 4", logo: "https://stream.codecloud.bd/uploads/logos/logo_d18f17e756ed24a7.png", encUrl: "aHR0cHM6Ly9saXZlMS5hc2lteHRlY2gub25saW5lL3RzcG9ydC9pbmRleC5tM3U4" },
-            { name: "T Sports HD Server 5", logo: "https://stream.codecloud.bd/uploads/logos/logo_d18f17e756ed24a7.png", encUrl: "aHR0cDovL3Jna2t3LmxpdmUvbGl2ZS8xQW9lbjdlbHA1L0lnTUp6MHRtQWEvMTMwNzE0LnRz" },
+            { name: "T Sports HD Server 4", logo: "https://stream.codecloud.bd/uploads/logos/logo_d18f17e756ed24a7.png", encUrl: "aHR0cDovL3Jna2t3LmxpdmUvbGl2ZS8xQW9lbjdlbHA1L0lnTUp6MHRtQWEvMTMwNzE0LnRz" },
             { name: "PTV Sports HD (World Cup)", logo: "https://stream.codecloud.bd/uploads/logos/logo_c87af38fabcdc1f5.jpg", encUrl: "aHR0cHM6Ly9jZG4xMC56b2hhbmF5YWFuLmNvbToxNjg2L2hscy9wdHZway5tM3U4" },
 
             { name: "PTV Sports HD (FIFA)", logo: "https://imglink.cc/cdn/wHhztDDZrU.png", encUrl: "aHR0cHM6Ly9saXZlNi5hc2lteHRlY2gub25saW5lL3B0di9pbmRleC5tM3U4" },
